@@ -1,0 +1,83 @@
+[
+  {
+    "scheme_name": "PM Kisan Samman Nidhi",
+    "scheme_type": "Central",
+    "state": "",
+    "basic_info": "Provides income support of ₹6,000 per year in three equal installments to eligible farmer families.",
+    "application_link": "https://pmkisan.gov.in",
+    "benefits": [
+      "Direct income support",
+      "Financial stability during crop seasons",
+      "Helps eligible small and marginal farmers"
+    ]
+    ,
+    "last_date": "2026-12-31"
+  },
+  {
+    "scheme_name": "PM Fasal Bima Yojana",
+    "scheme_type": "Central",
+    "state": "",
+    "basic_info": "Crop insurance scheme that provides financial support to farmers in case of crop loss due to natural calamities and other notified risks.",
+    "application_link": "https://pmfby.gov.in",
+    "benefits": [
+      "Crop loss protection",
+      "Low premium for insured farmers",
+      "Risk coverage for notified crops"
+    ]
+    ,
+    "last_date": "2026-11-30"
+  },
+  {
+    "scheme_name": "Kisan Credit Card",
+    "scheme_type": "Central",
+    "state": "",
+    "basic_info": "Enables farmers to obtain timely credit for cultivation and other related needs, through a flexible repayment mechanism.",
+    "application_link": "https://www.myscheme.gov.in/schemes/kcc",
+    "benefits": [
+      "Easy loans",
+      "Competitive interest rates",
+      "Flexible repayment options"
+    ]
+    ,
+    "last_date": "2026-10-15"
+  },
+  {
+    "scheme_name": "Karnataka Raitha Samparka Kendra (Example)",
+    "scheme_type": "State",
+    "state": "Karnataka",
+    "basic_info": "Example state scheme providing support services for farmers, including advisory and assistance to improve agricultural productivity.",
+    "application_link": "https://www.example.com/karnataka-farmers",
+    "benefits": [
+      "Farmer advisory and support",
+      "Awareness about improved practices",
+      "Assistance in accessing agricultural services"
+    ],
+    "last_date": "2026-09-30"
+  },
+  {
+    "scheme_name": "Maharashtra Crop Support (Example)",
+    "scheme_type": "State",
+    "state": "Maharashtra",
+    "basic_info": "Example Maharashtra initiative aimed at supporting farmers through subsidies and assistance programs for crop inputs and risk management.",
+    "application_link": "https://www.example.com/maharashtra-crop-support",
+    "benefits": [
+      "Subsidies for select crop inputs",
+      "Support for risk mitigation",
+      "Improved access to farming resources"
+    ],
+    "last_date": "2026-08-25"
+  },
+  {
+    "scheme_name": "Telangana Soil Health Assistance (Example)",
+    "scheme_type": "State",
+    "state": "Telangana",
+    "basic_info": "Example state scheme promoting soil health improvement through assistance for testing, amendments, and awareness programs.",
+    "application_link": "https://www.example.com/telangana-soil-health",
+    "benefits": [
+      "Soil testing support",
+      "Guidance on soil amendments",
+      "Better crop yields with improved soil health"
+    ],
+    "last_date": "2026-07-31"
+  }
+]
