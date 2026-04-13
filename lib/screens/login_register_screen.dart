@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../app/providers/app_providers.dart';
-import '../services/local_auth_service.dart';
 
 class LoginRegisterScreen extends ConsumerStatefulWidget {
   const LoginRegisterScreen({super.key});
@@ -38,15 +37,10 @@ class _LoginRegisterScreenState extends ConsumerState<LoginRegisterScreen> {
 
     try {
       if (_isAdminLogin) {
-        final ok = authService.isAdminLogin(
+        await authService.loginAdminWithCredentials(
           mobileNumber: mobile,
           password: password,
         );
-        if (!ok) {
-          throw const AuthException('Invalid admin credentials.');
-        }
-
-        await authService.loginAdmin();
       } else {
         await authService.loginUser(mobileNumber: mobile, password: password);
       }

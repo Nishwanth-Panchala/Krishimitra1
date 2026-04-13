@@ -8,6 +8,8 @@ import '../models/auth_role.dart';
 class LocalUserStorage {
   static const String _key = 'krishi_mitra_user_auth';
   static const String _roleKey = 'krishi_mitra_role';
+  static const String _jwtKey = 'krishi_mitra_jwt';
+  static const String _backendUserIdKey = 'krishi_mitra_backend_user_id';
 
   Future<void> saveUserAuth(UserAuthData data) async {
     final prefs = await SharedPreferences.getInstance();
@@ -30,6 +32,37 @@ class LocalUserStorage {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_key);
     await prefs.remove(_roleKey);
+    await prefs.remove(_jwtKey);
+    await prefs.remove(_backendUserIdKey);
+  }
+
+  Future<void> saveSession({
+    required String token,
+    required String userId,
+  }) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_jwtKey, token);
+    await prefs.setString(_backendUserIdKey, userId);
+  }
+
+  Future<void> clearSession() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_jwtKey);
+    await prefs.remove(_backendUserIdKey);
+  }
+
+  Future<String?> readJwtToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final t = prefs.getString(_jwtKey);
+    if (t == null || t.isEmpty) return null;
+    return t;
+  }
+
+  Future<String?> readBackendUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final id = prefs.getString(_backendUserIdKey);
+    if (id == null || id.isEmpty) return null;
+    return id;
   }
 
   Future<void> saveRole(AuthRole role) async {

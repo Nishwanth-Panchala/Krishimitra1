@@ -21,6 +21,7 @@ class SchemesListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final schemesAsync = ref.watch(schemesProvider);
+    final profileAsync = ref.watch(userProfileProvider);
     final bookmarksAsync = ref.watch(bookmarksProvider);
     final remindersAsync = ref.watch(remindersProvider);
     final roleAsync = ref.watch(authRoleProvider);
@@ -80,11 +81,23 @@ class SchemesListScreen extends ConsumerWidget {
                   child: Text('Failed to load schemes: $err'),
                 ),
                 data: (schemes) {
-                  final filtered =
+                  final farmerState = profileAsync.valueOrNull?.state ?? '';
+                  var filtered =
                       schemes.where((s) => s.schemeType == filterType).toList();
+                  if (filterType == SchemeType.state) {
+                    filtered = filtered
+                        .where((s) => s.matchesFarmerState(farmerState))
+                        .toList();
+                  }
                   if (filtered.isEmpty) {
-                    return const Center(
-                      child: Text('No schemes found for this filter.'),
+                    return Center(
+                      child: Text(
+                        filterType == SchemeType.state &&
+                                farmerState.trim().isNotEmpty
+                            ? 'No state schemes found for $farmerState. '
+                                'Check your state in Account or try Fetch Schemes.'
+                            : 'No schemes found for this filter.',
+                      ),
                     );
                   }
 

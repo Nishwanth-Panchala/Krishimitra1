@@ -11,9 +11,11 @@ class FeedbackEntry {
 
   factory FeedbackEntry.fromJson(Map<String, dynamic> json) {
     return FeedbackEntry(
-      mobileNumber: (json['mobileNumber'] ?? '').toString(),
+      mobileNumber: (json['mobileNumber'] ?? json['mobile'] ?? '').toString(),
       message: (json['message'] ?? '').toString(),
-      createdAt: DateTime.tryParse((json['createdAt'] ?? '').toString()) ??
+      createdAt: DateTime.tryParse(
+            (json['createdAt'] ?? json['created_at'] ?? '').toString(),
+          ) ??
           DateTime.now(),
     );
   }

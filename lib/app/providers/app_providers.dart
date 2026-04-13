@@ -7,6 +7,7 @@ import '../../models/scheme.dart';
 import '../../models/auth_role.dart';
 import '../../models/user_profile.dart';
 import '../../models/feedback.dart';
+import '../../services/api_service.dart';
 import '../../services/bookmark_service.dart';
 import '../../services/feedback_service.dart';
 import '../../services/local_auth_service.dart';
@@ -15,10 +16,19 @@ import '../../services/reminder_service.dart';
 import '../../services/notification_service.dart';
 import '../../models/app_notification.dart';
 
+final localUserStorageProvider = Provider<LocalUserStorage>(
+  (ref) => LocalUserStorage(),
+);
+
+final apiServiceProvider = Provider<ApiService>(
+  (ref) => ApiService(ref.watch(localUserStorageProvider)),
+);
+
 final schemesRepositoryProvider = Provider<SchemesRepository>(
   (ref) => SchemesRepository(
     SchemesLocalDataSource(),
     adminStore: SchemesAdminStore(),
+    apiService: ref.watch(apiServiceProvider),
   ),
 );
 
@@ -28,12 +38,11 @@ final schemesProvider = FutureProvider<List<Scheme>>(
       .fetchSchemesWithAdminOverrides(),
 );
 
-final localUserStorageProvider = Provider<LocalUserStorage>(
-  (ref) => LocalUserStorage(),
-);
-
 final localAuthServiceProvider = Provider<LocalAuthService>(
-  (ref) => LocalAuthService(ref.watch(localUserStorageProvider)),
+  (ref) => LocalAuthService(
+    ref.watch(apiServiceProvider),
+    ref.watch(localUserStorageProvider),
+  ),
 );
 
 final userProfileProvider = FutureProvider<UserProfile?>((ref) async {
@@ -53,7 +62,10 @@ final authRoleProvider = FutureProvider<AuthRole?>((ref) async {
 });
 
 final bookmarkServiceProvider = Provider<BookmarkService>(
-  (ref) => BookmarkService(),
+  (ref) => BookmarkService(
+    api: ref.watch(apiServiceProvider),
+    storage: ref.watch(localUserStorageProvider),
+  ),
 );
 
 final reminderServiceProvider = Provider<ReminderService>(
@@ -79,6 +91,9 @@ class BookmarksController extends AsyncNotifier<Set<String>> {
 
     final service = ref.read(bookmarkServiceProvider);
     await service.saveBookmarks(next);
+    try {
+      await ref.read(apiServiceProvider).bookmarkScheme(schemeId);
+    } catch (_) {}
     state = AsyncValue.data(next);
   }
 }
@@ -117,7 +132,10 @@ final remindersProvider =
 );
 
 final feedbackServiceProvider = Provider<FeedbackService>(
-  (ref) => FeedbackService(),
+  (ref) => FeedbackService(
+    api: ref.watch(apiServiceProvider),
+    storage: ref.watch(localUserStorageProvider),
+  ),
 );
 
 final feedbackProvider = FutureProvider<List<FeedbackEntry>>(
